@@ -1,0 +1,115 @@
+{% extends "template.html" %}
+{% block content %}
+
+<style>
+    .w3-container, .w3-select, .w3-input, .w3-button, .w3-table-all {
+        border-radius: 8px; /* Aplica bordes redondeados a todos los elementos principales */
+    }
+</style>
+
+<div class="w3-container">
+    <h5 class="w3-center w3-padding-24"><span class="w3-tag w3-white"></span></h5>
+    <h5 class="w3-center w3-padding-24"><span class="w3-tag w3-wide">REGISTROS</span></h5>
+
+<!-- Filtros y ordenamiento -->
+<form method="GET" action="/registro/ordenar">
+<div class="w3-row">
+    <div class="w3-col l2 m6 s12 w3-margin">
+        <label for="atributo">Atributos de Ordenamiento</label>
+        <select class="w3-select" id="atributo">
+            <option value="" disabled selected>Selecciona un método</option>
+            <option value="nombre">N° Ventanilla</option>
+            <option value="numVentanilla">Nombre</option>
+            <option value="fecha">Calificacion</option>
+            <!-- Agrega más métodos según sea necesario -->
+        </select>
+    </div>
+  
+    <div class="w3-col l2 m6 s12 w3-margin">
+        <label for="orden_dir">Ordenar</label>
+        <select class="w3-select" id="orden_dir">
+            <option value="asc">Ascendente</option>
+            <option value="desc">Descendente</option>
+        </select>
+    </div>
+  
+    <div class="w3-col l2 m6 s12 w3-margin">
+        <label for="tipos_sort">Algoritmo de Ordenamiento</label>
+        <select class="w3-select" id="tipos_sort">
+            <option value="quicksort">Quicksort</option>
+            <option value="mergesort">Mergesort</option>
+            <option value="shellsort">Shellsort</option>
+        </select>
+    </div>
+      
+</div>
+
+</div>
+<div class="w3-col l3 m6 s12">
+      
+    <button class="w3-button w3-green w3-block" class="btn btn-warning mt-2" type="submit">Ordenar</button>
+   </div>
+</form>
+  
+<div class="w3-container w3-margin-top">
+    <div class="w3-row w3-padding">
+        <!-- Columna para el buscador -->
+        <div class="w3-col l4 m12 s12 w3-margin-bottom w3-margin">
+            <label for="searchInput">Buscador</label>
+            <input type="text" class="w3-input w3-border" id="searchInput" placeholder="Escribe aquí">
+        </div>
+  
+        <!-- Columna para la selección de orden -->
+        <div class="w3-col l2 m6 s12 w3-margin-bottom w3-margin">
+            <label for="sortOrder">Ordenar</label>
+            <select class="w3-select w3-border" id="sortOrder">
+                <option value="asc">Binario</option>
+                <option value="desc">Binario secuencial</option>
+            </select>
+        </div>
+  
+        <!-- Columna para el botón de búsqueda -->
+        <div class="w3-col l2 m6 s12 w3-margin">
+            <label for="sortButton">&nbsp;</label>
+            <button class="w3-button w3-green w3-block" onclick="applySort()">Buscar</button>
+        </div>
+    </div>
+</div>
+
+  
+
+    <!-- Tabla de registros -->
+    <div class="w3-margin-top">
+        <table class="w3-table-all w3-card-4" id="recordsTable">
+            <thead>
+                <tr class="w3-light-grey">
+                    <th>ID registro</th>
+                    <th>N° Ventanilla</th>
+                    <th>Nombre</th>
+                    <th>Fecha y hora</th>
+                    <th>Calificación</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in lista %}
+                <tr>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.numVentanilla }}</td>
+                    <td>{{ item.nombre }}</td>
+                    <td>{{ item.fecha }}</td>
+                    <td>{{ item.calificacion }}</td>
+                    <td><a href="/registro/modificar/{{ item.id }}" class="w3-button w3-blue">Modificar</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Botón de agregar atención -->
+    <div class="w3-margin-top w3-center">
+        <a href="/ventanillas" class="w3-button w3-blue w3-hover-green" style="height: 50px;">AGREGAR ATENCIÓN</a>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,117 @@
+{% extends "template.html" %}
+{% block content %}
+
+<style>
+    .w3-container, .w3-select, .w3-input, .w3-button, .w3-table-all {
+        border-radius: 8px; /* Aplica bordes redondeados a todos los elementos principales */
+    }
+</style>
+
+<div class="w3-container">
+    <h5 class="w3-center w3-padding-24"><span class="w3-tag w3-white"></span></h5>
+    <h5 class="w3-center w3-padding-24"><span class="w3-tag w3-wide">REGISTROS</span></h5>
+
+<!-- Filtros y ordenamiento -->
+<div class="w3-container w3-card w3-margin-top w3-padding-large w3-light-grey w3-animate-opacity">
+    <form method="get" action="/registro/ordenar">
+        <div class="w3-row-padding">
+            <div class="w3-col l4 m6 s12 w3-margin-bottom">
+                <label for="sort_by" class="w3-text-teal"><b>Ordenar por:</b></label>
+                <select id="sort_by" name="sort_by" class="w3-select w3-border w3-round-large">
+                    <option value="_numVentanilla">N° Ventanilla</option>
+                    <option value="_nombre">Nombre</option>
+                    <option value="_calificacion">Calificación</option>
+                </select>
+            </div>
+            <div class="w3-col l4 m6 s12 w3-margin-bottom">
+                <label for="order" class="w3-text-teal"><b>Elegir orden:</b></label>
+                <select id="order" name="order" class="w3-select w3-border w3-round-large">
+                    <option value="asc">Ascendente</option>
+                    <option value="desc">Descendente</option>
+                </select>
+            </div>
+            <div class="w3-col l4 m6 s12 w3-margin-bottom">
+                <label for="metodo" class="w3-text-teal"><b>Método de ordenación:</b></label>
+                <select id="metodo" name="metodo" class="w3-select w3-border w3-round-large">
+                    <option value="quicksort">Quicksort</option>
+                    <option value="mergesort">Mergesort</option>
+                    <option value="shellsort">Shellsort</option>
+                </select>
+            </div>
+        </div>
+        <button type="submit" class="w3-button w3-teal w3-hover-blue w3-round-large">Ordenar</button>
+    </form>
+</div>
+  
+<!-- Columna para el buscador -->
+<form method="GET" action="/registro/buscar" class="p-4 bg-dark rounded">
+    <div class="form-group">
+        <label for="searchMethod" class="text-white">Método de búsqueda</label>
+        <select id="searchMethod" name="metodo_busqueda" class="form-control">
+            <option value="lineal">Búsqueda Lineal</option>
+            <option value="binario">Búsqueda Binaria</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="searchAttribute" class="text-white">Atributo de búsqueda</label>
+        <select id="searchAttribute" name="searchAttribute" class="form-control">
+            <option value="_numVentanilla">N° Ventanilla</option>
+            <option value="_nombre">Nombre</option>
+            <option value="_calificacion">Calificación</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="searchValue" class="text-white">Valor de búsqueda</label>
+        <input type="text" id="searchValue" name="query" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label class="text-white">Tipo de coincidencia</label>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="startsWith" id="anywhere" value="false" checked>
+            <label class="form-check-label text-white" for="anywhere">Cualquier Lugar</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="startsWith" id="start" value="true">
+            <label class="form-check-label text-white" for="start">Primera Letra</label>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary w-100">Buscar</button>
+</form>
+
+  
+
+    <!-- Tabla de registros -->
+    <div class="w3-margin-top">
+        <table class="w3-table-all w3-card-4" id="recordsTable">
+            <thead>
+                <tr class="w3-light-grey">
+                    <th>ID registro</th>
+                    <th>N° Ventanilla</th>
+                    <th>Nombre</th>
+                    <th>Fecha </th>
+                    <th>Calificación</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in lista %}
+                <tr>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.numVentanilla }}</td>
+                    <td>{{ item.nombre }}</td>
+                    <td>{{ item.fecha }}</td>
+                    <td>{{ item.calificacion }}</td>
+                    <td><a href="/registro/modificar/{{ item.id }}" class="w3-button w3-blue">Modificar</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Botón de agregar atención -->
+    <div class="w3-margin-top w3-center">
+        <a href="/ventanillas" class="w3-button w3-blue w3-hover-green" style="height: 50px;">AGREGAR ATENCIÓN</a>
+    </div>
+</div>
+
+{% endblock %}

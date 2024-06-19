@@ -1,0 +1,37 @@
+{%extends "template.html"%}
+{%block content%}
+<h2 class="text-white">Editar Factura</h2>
+<div class="booking-form-body">
+    <a href="/registro" class="btn btn-success">VOLVER</a>       
+    <form id="form" class="custom-form booking-form"  action="/registro/modificar" method="post" role="form">
+        <div class="booking-form-body">
+            <input type="hidden" name="id" value="{{data._id}}"/>
+            <div class="row">
+                
+                <div class="col-lg-6 col-12">
+                    <input type="text" name="nombre" value="{{data._nombre}}" class="form-control" placeholder="Nombre" required>
+                </div>
+                <div class="col-lg-6 col-12">
+                  <input type="date" name="fecha" value="{{data._fecha}}" class="form-control" placeholder="Fecha" required>
+                </div>
+                <div class="col-lg-6 col-12">
+                    
+                    <select name="calificacion" id="calificacion3" class="w3-input w3-padding-16 w3-border" type="text" name="calificacion" value="{{data._calificacion}}" class="form-control" placeholder="Calificación" required>
+                      <optgroup label="CALIFICACIONES: ">
+                        <option value="MALO">MALO</option>
+                        <option value="REGULAR">REGULAR</option>
+                        <option value="BUENO">BUENO</option>
+                        <option value="MUY_BUENO">MUY BUENO</option>
+                        <option value="EXCELENTE">EXCELENTE</option>
+                      </optgroup>
+                    </select>
+                </div>
+                
+
+                <div class="col-lg-4 col-md-10 col-8 mx-auto mt-2">
+                    <button id="boton" type="submit" class="form-control btn btn-success">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </form> 
+{% endblock %}                       

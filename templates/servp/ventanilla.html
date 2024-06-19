@@ -1,0 +1,122 @@
+{% extends "template.html" %}
+{% block content %}
+<div class="w3-container" id="menu">
+  <div class="w3-content" style="max-width:700px">
+
+    <h5 class="w3-center w3-padding-48"><span class="w3-tag w3-wide">SERVICIO PUBLICO</span></h5>
+
+      <div class="w3-row w3-center w3-card w3-padding">
+        <a href="javascript:void(0)" onclick="openMenu(event, 'Ventanilla 1');" id="myLink">
+          <div class="w3-col s4 tablink">Ventanilla N°1</div>
+        </a>
+        <a href="javascript:void(0)" onclick="openMenu(event, 'Ventanilla 2');">
+          <div class="w3-col s4 tablink">Ventanilla N°2</div>
+        </a>
+        <a href="javascript:void(0)" onclick="openMenu(event, 'Ventanilla 3');">
+          <div class="w3-col s4 tablink">Ventanilla N°3</div>
+        </a>
+      </div>
+
+    <div id="Ventanilla 1" class="w3-container menu w3-padding-48 w3-card">
+      <!-- Formulario para Ventanilla 1 -->
+      <form id="form1" action="/ventanillas/guardar" method="post" role="form">
+        <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="NOMBRE CLIENTE" required name="nombre"></p>
+        <input type="hidden" name="fecha" id="fecha">
+        <input type="hidden" name="numVentanilla" value="1"> <!-- Número de ventanilla -->
+        <p>
+          <select name="calificacion" id="calificacion1" class="w3-input w3-padding-16 w3-border">
+            <optgroup label="CALIFICACIONES: ">
+              <option value="MALO">MALO</option>
+              <option value="REGULAR">REGULAR</option>
+              <option value="BUENO">BUENO</option>
+              <option value="MUY_BUENO">MUY BUENO</option>
+              <option value="EXCELENTE">EXCELENTE</option>
+            </optgroup>
+          </select>
+        </p>
+        <p><button class="w3-button w3-black" type="submit">REGISTRAR</button></p>
+      </form>
+    </div>
+
+    <!-- Repite lo mismo para las otras ventanillas -->
+    <div id="Ventanilla 2" class="w3-container menu w3-padding-48 w3-card" style="display:none;">
+      <!-- Formulario para Ventanilla 2 -->
+      <form id="form2" action="/ventanillas/guardar" method="post" role="form">
+        <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="NOMBRE CLIENTE" required name="nombre"></p>
+        <input type="hidden" name="fecha" id="fecha2">
+        <input type="hidden" name="numVentanilla" value="2"> <!-- Número de ventanilla -->
+        <p>
+          <select name="calificacion" id="calificacion2" class="w3-input w3-padding-16 w3-border">
+            <optgroup label="CALIFICACIONES: ">
+              <option value="MALO">MALO</option>
+              <option value="REGULAR">REGULAR</option>
+              <option value="BUENO">BUENO</option>
+              <option value="MUY_BUENO">MUY BUENO</option>
+              <option value="EXCELENTE">EXCELENTE</option>
+            </optgroup>
+          </select>
+        </p>
+        <p><button class="w3-button w3-black" type="submit">REGISTRAR</button></p>
+      </form>
+    </div>
+
+    <div id="Ventanilla 3" class="w3-container menu w3-padding-48 w3-card" style="display:none;">
+      <!-- Formulario para Ventanilla 3 -->
+      <form id="form3" action="/ventanillas/guardar" method="post" role="form">
+        <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="NOMBRE CLIENTE" required name="nombre"></p>
+        <input type="hidden" name="fecha" id="fecha3">
+        <input type="hidden" name="numVentanilla" value="3"> <!-- Número de ventanilla -->
+        <p>
+          <select name="calificacion" id="calificacion3" class="w3-input w3-padding-16 w3-border">
+            <optgroup label="CALIFICACIONES: ">
+              <option value="MALO">MALO</option>
+              <option value="REGULAR">REGULAR</option>
+              <option value="BUENO">BUENO</option>
+              <option value="MUY_BUENO">MUY BUENO</option>
+              <option value="EXCELENTE">EXCELENTE</option>
+            </optgroup>
+          </select>
+        </p>
+        <p><button class="w3-button w3-black" type="submit">REGISTRAR</button></p>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+function openMenu(evt, menuName) {
+  var i, x, tablinks;
+  x = document.getElementsByClassName("menu");
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablink");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" w3-light-grey", "");
+  }
+  document.getElementById(menuName).style.display = "block";
+  evt.currentTarget.firstElementChild.className += " w3-light-grey";
+}
+
+document.getElementById("myLink").click();
+
+function setLocalDate() {
+  // Función para generar una fecha aleatoria dentro de un rango
+  function generateRandomDate(start, end) {
+    let date = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+    return date.toISOString().split('T')[0]; // Solo la fecha en formato YYYY-MM-DD
+  }
+
+  // Generar una fecha aleatoria en los últimos 30 días
+  let randomDate = generateRandomDate(new Date(2024, 5, 1), new Date(2024, 5, 30)); // Cambia el rango según necesites
+
+  // Establecer la fecha en los campos ocultos
+  document.getElementById('fecha').value = randomDate;
+  document.getElementById('fecha2').value = randomDate;
+  document.getElementById('fecha3').value = randomDate;
+}
+
+// Establecer la fecha automáticamente cuando la página se carga
+window.onload = setLocalDate;
+</script>
+{% endblock %}
